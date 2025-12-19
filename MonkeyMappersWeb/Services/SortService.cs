@@ -15,9 +15,9 @@ namespace MonkeyMappersWeb.Services
             _context = context;
         }
 
-        public async Task<List<Player>> SortByPlayDate()
+        public async Task<List<Player>> SortById()
         {
-            return await _context.Players.OrderByDescending(t => t.DateTime).ToListAsync();
+            return await _context.Players.OrderBy(p => p.Id).ToListAsync();
         }
     }
 }

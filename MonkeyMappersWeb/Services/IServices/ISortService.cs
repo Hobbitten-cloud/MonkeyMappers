@@ -5,6 +5,6 @@ namespace MonkeyMappersWeb.Services.IServices
 {
     public interface ISortService
     {
-        Task<List<Player>> SortByPlayDate();
+        Task<List<Player>> SortById();
     }
 }
