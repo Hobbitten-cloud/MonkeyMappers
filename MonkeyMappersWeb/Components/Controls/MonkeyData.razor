@@ -1,0 +1,36 @@
+﻿@inject IPlayerRepo PlayerRepo
+
+<h3>Player Data</h3>
+
+@if (players != null)
+{
+    <p>Total @players.Count players have played the map</p>
+    <hr />
+    <div>
+        @foreach (var player in players)
+        {
+            <div>
+                <p>@player.Name</p>
+                <p>@player.SteamId</p>
+                <p>Last Played: @player.DateTime.ToString()</p>
+                <hr />
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Loading Players...</p>
+}
+
+@code {
+    private List<Player> players { get; set; }
+    private ISortService sortService { get; set; }
+
+
+    // Loads all posts to feed
+    protected override async Task OnInitializedAsync()
+    {
+        players = await PlayerRepo.GetAllPlayers();
+    }
+}
