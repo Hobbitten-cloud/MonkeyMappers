@@ -40,38 +40,45 @@ namespace MonkeyMappersWeb.Repositories
             }
         }
 
-        public void ReadPlayers()
+        public async Task ReadPlayersAsync()
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                con.Open();
+                await con.OpenAsync();
 
                 try
                 {
-                    using (StreamReader sr = new StreamReader("Players.txt"))
+                    using (HttpClient client = new HttpClient())
                     {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
+                        string url = "https://github.com/NiDE-gg/ZE-Configs/tree/master/cstrike/scripts/vscripts/ze_monkey_mappers2/playerstats/player.txt";
+                        string content = await client.GetStringAsync(url);
+
+                        using (StringReader sr = new StringReader(content))
                         {
-                            string[] parts = line.Split(';');
-                            if (parts.Length == 2)
+                            string line;
+                            while ((line = sr.ReadLine()) != null)
                             {
-                                Player player = new Player
+                                string[] parts = line.Split(';');
+                                if (parts.Length == 2)
                                 {
-                                    Name = parts[0].Trim(),
-                                    SteamId = parts[1].Trim()
-                                };
-                                AddPlayer(player);
+                                    Player player = new Player
+                                    {
+                                        Name = parts[0].Trim(),
+                                        SteamId = parts[1].Trim()
+                                    };
+
+                                    AddPlayer(player);
+                                }
                             }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    Console.WriteLine(ex);
                 }
             }
-
         }
+
     }
 }

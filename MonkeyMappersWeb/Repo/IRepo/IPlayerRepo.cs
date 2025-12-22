@@ -6,6 +6,6 @@ namespace MonkeyMappersWeb.Repo.IRepo
     {
         public Task<List<Player>> GetAllPlayers();
         public void AddPlayer(Player player);
-        public void ReadPlayers();
+        public Task ReadPlayersAsync();
     }
 }

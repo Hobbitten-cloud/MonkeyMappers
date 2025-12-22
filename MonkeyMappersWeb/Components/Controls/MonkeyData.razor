@@ -1,31 +1,38 @@
 ﻿@inject IPlayerRepo PlayerRepo
 
-<h3>Player Data</h3>
+<h3 class="mb-3">Information for players</h3>
 
 @if (players != null)
 {
-    <p>Total @players.Count players have played the map</p>
-    <hr />
-    <div>
+    <p class="text-muted">
+        Total <strong>@players.Count</strong> players have played the map
+    </p>
+
+    <div class="list-group shadow-sm">
         @foreach (var player in players)
         {
-            <div>
-                <p>@player.Name</p>
-                <p>@player.SteamId</p>
-                <hr />
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="fw-semibold">@player.Name</div>
+                    <small class="text-muted">@player.SteamId</small>
+                </div>
+
+                <span class="badge bg-secondary">Player</span>
             </div>
         }
     </div>
 }
 else
 {
-    <p>Loading Players...</p>
+    <div class="text-center text-muted">
+        <div class="spinner-border spinner-border-sm me-2"></div>
+        Loading players...
+    </div>
 }
 
 @code {
     private List<Player> players { get; set; }
     private ISortService sortService { get; set; }
-
 
     // Loads all posts to feed
     protected override async Task OnInitializedAsync()
