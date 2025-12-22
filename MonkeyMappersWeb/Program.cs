@@ -25,8 +25,7 @@ namespace MonkeyMappersWeb
                     options.UseSqlServer(builder.Configuration.GetConnectionString("MyDBConnection"));
 
                 }
-            }
-);
+            });
             builder.Services.AddScoped<IPlayerRepo, PlayerRepo>();
             builder.Services.AddScoped<ISortService, SortService>();
 
